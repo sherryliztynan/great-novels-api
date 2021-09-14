@@ -136,7 +136,6 @@ INSERT INTO titlesGenres (titleId, genreId) VALUES (11, 7);
 INSERT INTO titlesGenres (titleId, genreId) VALUES (11, 12);
 INSERT INTO titlesGenres (titleId, genreId) VALUES (12, 7);
 INSERT INTO titlesGenres (titleId, genreId) VALUES (12, 5);
-INSERT INTO titlesGenres (titleId, genreId) VALUES (12, 5);
 INSERT INTO titlesGenres (titleId, genreId) VALUES (13, 7);
 INSERT INTO titlesGenres (titleId, genreId) VALUES (13, 15);
 INSERT INTO titlesGenres (titleId, genreId) VALUES (13, 5);

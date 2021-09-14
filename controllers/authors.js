@@ -1,4 +1,7 @@
+/* eslint-disable no-console */
 const models = require('../models')
+const { Op } = require('sequelize')
+
 
 const getAllAuthors = async (request, response) => {
   const authors = await models.Authors.findAll()
@@ -6,20 +9,29 @@ const getAllAuthors = async (request, response) => {
   return response.send(authors)
 }
 
-const getAllInformationByAuthorId = async (request, response) => {
-  const { id } = request.params
+const getNovelsByAuthorIdOrLastName = async (request, response) => {
+  try {
+    const { identifier } = request.params
 
-  const author = await models.Authors.findOne({
-    where: { id },
-    include: [{
-      model: models.Titles,
-      include: [{ model: models.Genres }]
-    }]
-  })
+    const author = await models.Authors.findOne({
+      where: {
+        [Op.or]: [
+          { id: identifier },
+          { lastName: { [Op.like]: `%${identifier}%` } },
+        ]
+      },
+      include: [{
+        model: models.Titles,
+        include: [{ model: models.Genres }]
+      }]
+    })
 
-  return author
-    ? response.send(author)
-    : response.sendStatus(404)
+    return author
+      ? response.send(author)
+      : response.sendStatus(404)
+  } catch (error) {
+    return response.status(500).send('Unable to retrieve novel, please try again')
+  }
 }
 
-module.exports = { getAllAuthors, getAllInformationByAuthorId }
+module.exports = { getAllAuthors, getNovelsByAuthorIdOrLastName }

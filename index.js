@@ -1,21 +1,25 @@
 const express = require('express')
-const app = express()
-const { getAllAuthors, getAllInformationByAuthorId } = require('./controllers/authors')
+
+const { getAllAuthors, getNovelsByAuthorIdOrLastName } = require('./controllers/authors')
 const { getAllGenres, getAllNovelsByGenreId } = require('./controllers/genres')
-const { getAllNovels, getAllNovelsWithAuthorGenre } = require('./controllers/titles')
+const { getAllNovels, getNovelByIdOrTitle } = require('./controllers/titles')
 
-app.get('/authors', getAllAuthors)
+const app = express()
 
-app.get('/authors/:id', getAllInformationByAuthorId)
+app.use(express.json())
 
-app.get('/genres', getAllGenres)
+app.get('/authors', getAllAuthors) // works //
 
-app.get('genres/:id', getAllNovelsByGenreId)
+app.get('/authors/:identifier', getNovelsByAuthorIdOrLastName)
 
-app.get('novels', getAllNovels)
+app.get('/genres', getAllGenres) // works //
 
-app.get('novels/:id', getAllNovelsWithAuthorGenre)
+app.get('/genres/:id', getAllNovelsByGenreId) // works //
 
-app.listen(1337, () => {
-    console.log('Listening on port 1337...') // eslint-disable-line no-console
-  })
+app.get('/novels', getAllNovels) // works //
+
+app.get('/novels/:identifier', getNovelByIdOrTitle)
+
+app.listen(1338, () => {
+  console.log('Listening on port 1338...') // eslint-disable-line no-console
+})
