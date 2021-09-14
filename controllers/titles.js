@@ -15,11 +15,7 @@ const getNovelByIdOrTitle = async (request, response) => {
   try {
     const { identifier } = request.params
 
-    const title = await models.Titles.findOne({
-      where: { title: { [Op.like]: `%${identifier}%` } }
-    })
-
-    /*  const title = await models.Titles.findOne({
+     const title = await models.Titles.findOne({
       where: {
         [Op.or]: [
           { id: identifier },
@@ -27,8 +23,8 @@ const getNovelByIdOrTitle = async (request, response) => {
         ]
       },
       include: [{ model: models.Authors }, { model: models.Genres }]
-    })*/
-    console.log(title)
+    })
+
 
     return title
       ? response.send(title)
